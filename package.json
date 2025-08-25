@@ -27,5 +27,5 @@
     "typescript": "^5.9.2",
     "unbuild": "^3.6.1"
   },
-  "packageManager": "yarn@4.9.2"
+  "packageManager": "yarn@4.9.3"
 }
