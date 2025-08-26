@@ -8,4 +8,4 @@ import type { AttributeRepr } from "./AttributeRepr";
  * - `#[doc = "Doc Comment"]` or `/// Doc comment`. These are in [`Item::docs`] instead.
  * - `#[deprecated]`. These are in [`Item::deprecation`] instead.
  */
-export type Attribute = "non_exhaustive" | { "must_use": { reason: string | null, } } | { "export_name": string } | { "link_section": string } | "automatically_derived" | { "repr": AttributeRepr } | "no_mangle" | { "target_feature": { enable: Array<string>, } } | { "other": string };
+export type Attribute = "non_exhaustive" | { "must_use": { reason: string | null, } } | "macro_export" | { "export_name": string } | { "link_section": string } | "automatically_derived" | { "repr": AttributeRepr } | "no_mangle" | { "target_feature": { enable: Array<string>, } } | { "other": string };
