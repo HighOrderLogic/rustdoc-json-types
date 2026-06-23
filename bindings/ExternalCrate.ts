@@ -18,4 +18,11 @@ name: string,
 /**
  * The root URL at which the crate's documentation lives.
  */
-html_root_url: string | null, };
+html_root_url: string | null, 
+/**
+ * A path from where this crate was loaded.
+ *
+ * This will typically be a `.rlib` or `.rmeta`. It can be used to determine which crate
+ * this was in terms of whatever build-system invoked rustc.
+ */
+path: string, };

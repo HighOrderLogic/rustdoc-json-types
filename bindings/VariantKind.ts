@@ -6,11 +6,11 @@ import type { Id } from "./Id";
  */
 export type VariantKind = "plain" | { "tuple": Array<Id | null> } | { "struct": { 
 /**
- * The list of variants in the enum.
- * All of the corresponding [`Item`]s are of kind [`ItemEnum::Variant`].
+ * The list of named fields in the variant.
+ * All of the corresponding [`Item`]s are of kind [`ItemEnum::StructField`].
  */
 fields: Array<Id>, 
 /**
- * Whether any variants have been removed from the result, due to being private or hidden.
+ * Whether any fields have been removed from the result, due to being private or hidden.
  */
 has_stripped_fields: boolean, } };
