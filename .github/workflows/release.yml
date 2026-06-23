@@ -24,6 +24,9 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
 
+      - name: Install dependencies
+        run: yarn --immutable
+
       - name: Publish
         run: |
           npm publish
