@@ -29,15 +29,15 @@ includes_private: boolean,
  * A collection of all items in the local crate as well as some external traits and their
  * items that are referenced locally.
  */
-index: { [key in Id]?: Item }, 
+index: { [key in Id]: Item }, 
 /**
  * Maps IDs to fully qualified paths and other info helpful for generating links.
  */
-paths: { [key in Id]?: ItemSummary }, 
+paths: { [key in Id]: ItemSummary }, 
 /**
  * Maps `crate_id` of items to a crate name and html_root_url if it exists.
  */
-external_crates: { [key in number]?: ExternalCrate }, 
+external_crates: { [key in number]: ExternalCrate }, 
 /**
  * Information about the target for which this documentation was generated
  */
