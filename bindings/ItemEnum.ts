@@ -8,6 +8,7 @@ import type { Impl } from "./Impl";
 import type { Module } from "./Module";
 import type { Primitive } from "./Primitive";
 import type { ProcMacro } from "./ProcMacro";
+import type { ProvidedDefaultUnstable } from "./ProvidedDefaultUnstable";
 import type { Static } from "./Static";
 import type { Struct } from "./Struct";
 import type { Trait } from "./Trait";
@@ -58,7 +59,14 @@ type: Type,
  * //               ^^^^^^^^^^
  * ```
  */
-value: string | null, } } | { "assoc_type": { 
+value: string | null, 
+/**
+ * Metadata about an unstable default value provided for the associated constant, if any.
+ *
+ * Empty if the associated constant has no default (see [`ItemEnum::AssocConst::value`]),
+ * or if the default value is stable.
+ */
+default_unstable: ProvidedDefaultUnstable | null, } } | { "assoc_type": { 
 /**
  * The generic parameters and where clauses on ahis associated type.
  */
@@ -84,4 +92,11 @@ bounds: Array<GenericBound>,
  * //       ^^^^^
  * ```
  */
-type: Type | null, } };
+type: Type | null, 
+/**
+ * Metadata about an unstable default value provided for the associated type, if any.
+ *
+ * Empty if the associated type has no default (see [`ItemEnum::AssocType::type_`]),
+ * or if the default value is stable.
+ */
+default_unstable: ProvidedDefaultUnstable | null, } };
