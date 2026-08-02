@@ -7,5 +7,11 @@ import type { AttributeRepr } from "./AttributeRepr";
  * This doesn't include:
  * - `#[doc = "Doc Comment"]` or `/// Doc comment`. These are in [`Item::docs`] instead.
  * - `#[deprecated]`. These are in [`Item::deprecation`] instead.
+ * - `#[stable]` and `#[unstable]`. These are in [`Item::stability`] instead.
+ * - `#[rustc_const_stable]` and `#[rustc_const_unstable]`. These are in
+ *   [`Item::const_stability`] instead.
+ * - `#[rustc_default_body_unstable]`. These are in the `default_unstable` field on the appropriate
+ *   item kinds: [`Function::default_unstable`], [`ItemEnum::AssocConst::default_unstable`],
+ *   and [`ItemEnum::AssocType::default_unstable`].
  */
 export type Attribute = "non_exhaustive" | { "must_use": { reason: string | null, } } | "macro_export" | { "export_name": string } | { "link_section": string } | "automatically_derived" | { "repr": AttributeRepr } | "no_mangle" | { "target_feature": { enable: Array<string>, } } | { "other": string };

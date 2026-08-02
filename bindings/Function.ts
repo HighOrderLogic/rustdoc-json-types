@@ -2,6 +2,7 @@
 import type { FunctionHeader } from "./FunctionHeader";
 import type { FunctionSignature } from "./FunctionSignature";
 import type { Generics } from "./Generics";
+import type { ProvidedDefaultUnstable } from "./ProvidedDefaultUnstable";
 
 /**
  * A function declaration (including methods and other associated functions).
@@ -22,4 +23,12 @@ header: FunctionHeader,
 /**
  * Whether the function has a body, i.e. an implementation.
  */
-has_body: boolean, };
+has_body: boolean, 
+/**
+ * Metadata about a possible unstable provided default implementation for trait methods.
+ *
+ * Only populated for function items inside traits. Empty if the trait method
+ * does not have a default implementation (see [`Function::has_body`]),
+ * or if its default implementation is stable.
+ */
+default_unstable: ProvidedDefaultUnstable | null, };
