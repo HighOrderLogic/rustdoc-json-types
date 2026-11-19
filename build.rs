@@ -1,6 +1,6 @@
 use std::{cell::LazyCell, env, fs::File, io::Write, path::Path};
 
-use regex::{Regex, RegexBuilder, Captures};
+use regex::{Captures, Regex, RegexBuilder};
 
 const DERIVE_RE: LazyCell<Regex> = LazyCell::new(|| {
     RegexBuilder::new(r#"^\s*#\[derive\((?<content>.+)\)\]"#)
@@ -34,15 +34,19 @@ fn main() {
 
     output = output.replace("serde_derive", "serde");
 
-    output = DERIVE_RE.replace_all(&output, |caps: &Captures| {
-        let derive_content = caps.name("content").unwrap().as_str();
-        format!("#[derive(ts_rs::TS, {})]", derive_content)
-    }).to_string();
+    output = DERIVE_RE
+        .replace_all(&output, |caps: &Captures| {
+            let derive_content = caps.name("content").unwrap().as_str();
+            format!("#[derive(ts_rs::TS, {})]", derive_content)
+        })
+        .to_string();
 
-    output = PUB_MEMBER_RE.replace_all(&output, |caps: &Captures| {
-        let pub_member = caps.get(0).unwrap().as_str();
-        format!("#[ts(export)]\n{}", pub_member)
-    }).to_string();
+    output = PUB_MEMBER_RE
+        .replace_all(&output, |caps: &Captures| {
+            let pub_member = caps.get(0).unwrap().as_str();
+            format!("#[ts(export)]\n{}", pub_member)
+        })
+        .to_string();
 
     output = output
         .replace("//!", "//")

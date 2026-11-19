@@ -18,14 +18,14 @@
   "scripts": {
     "clean": "rimraf bindings",
     "generate": "yarn run clean && cargo test",
-    "build": "unbuild",
+    "build": "tsdown",
     "prepack": "yarn run generate && yarn run build"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
     "rimraf": "^6.1.4",
-    "typescript": "^5.9.3",
-    "unbuild": "^3.6.1"
+    "tsdown": "^0.23.7",
+    "typescript": "^5.9.3"
   },
   "packageManager": "yarn@4.18.1"
 }
