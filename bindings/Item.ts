@@ -4,6 +4,7 @@ import type { Deprecation } from "./Deprecation";
 import type { Id } from "./Id";
 import type { ItemEnum } from "./ItemEnum";
 import type { Span } from "./Span";
+import type { Stability } from "./Stability";
 import type { Visibility } from "./Visibility";
 
 /**
@@ -48,7 +49,15 @@ links: { [key in string]: Id },
 /**
  * Attributes on this item.
  *
- * Does not include `#[deprecated]` attributes: see the [`Self::deprecation`] field instead.
+ * Does not include:
+ * - `#[doc = "Doc Comment"]` or `/// Doc comment`: see [`Self::docs`] instead.
+ * - `#[deprecated]` attributes: see the [`Self::deprecation`] field instead.
+ * - `#[stable]` and `#[unstable]` attributes: see the [`Self::stability`] field instead.
+ * - `#[rustc_const_stable]` and `#[rustc_const_unstable]` attributes:
+ *   see the [`Self::const_stability`] field instead.
+ * - `#[rustc_default_body_unstable]` attributes: instead see `default_unstable` fields on
+ *   item kinds that can have unstable default values, such as [`Function::default_unstable`],
+ *   [`ItemEnum::AssocConst::default_unstable`], and [`ItemEnum::AssocType::default_unstable`].
  *
  * Attributes appear in pretty-printed Rust form, regardless of their formatting
  * in the original source code. For example:
@@ -63,6 +72,39 @@ attrs: Array<Attribute>,
  * Information about the item’s deprecation, if present.
  */
 deprecation: Deprecation | null, 
+/**
+ * Stability information for this item, if any.
+ *
+ * This describes whether the item itself is stable or unstable, as noted by a `#[stable]` or
+ * `#[unstable]` attribute. It does not capture const stability, default-body stability, etc.
+ *
+ * Whether a path to an item is stable depends on the stability of containing modules
+ * or re-exports along that path. For example, a stable item can be reachable through both an
+ * unstable module and a stable re-export.
+ *
+ * For items whose inner kind is [`ItemEnum::Use`], this is the stability of the import itself,
+ * not the item being imported. This allows users to determine the stability of paths
+ * that involve re-exports.
+ *
+ * Associated items can inherit instability from their enclosing unstable trait or impl.
+ * Unannotated associated items in stable traits or impls may have no separate stability value.
+ *
+ * Currently, Rust's `#[stable]` and `#[unstable]` attributes are themselves not stable.
+ * As a result, this field is primarily populated for standard-library items;
+ * most ordinary third-party crates usually have no data here.
+ */
+stability: Stability | null, 
+/**
+ * Stability information for using this item in const contexts, if any.
+ *
+ * This is separate from [`Self::stability`]. An item can be stable as regular API while its
+ * const use is unstable. An unstable item may have no separate const-stability value here.
+ *
+ * This field is only populated for item kinds whose const behavior can have separate
+ * stability information, such as const functions, const traits, const trait impls,
+ * and associated items whose const behavior is controlled by a const trait or const impl.
+ */
+const_stability: Stability | null, 
 /**
  * The type-specific fields describing this item.
  */
